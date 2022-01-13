@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../../styles/welocome.module.scss";
+import styles from "../styles/Home.module.scss";
 const Welcome = () => {
 	const [modal, setModal] = useState(false);
 	const [name, setName] = useState("");
