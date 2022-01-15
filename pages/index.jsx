@@ -6,6 +6,8 @@ const Welcome = () => {
 	const [email, setEmail] = useState("");
 	const [response, setResponse] = useState(false);
 	const [sub, setSub] = useState(true);
+	const [confrim, setConfrim] = useState(false);
+	const [show, setShow] = useState(false);
 	const ss = sub ? "yes" : "no";
 	const jsons = {
 		cashback_type: "percentage",
@@ -29,49 +31,68 @@ const Welcome = () => {
 		)
 			.then((res) => res.json())
 			.then((d) => {
-				console.log(d);
+				if (d[0].Full_Name) {
+					setConfrim(true);
+				}
 			});
 	};
-
+	const handleres = () => {
+		setShow(true);
+		setTimeout(() => {
+			setShow(false);
+			setResponse(true);
+		}, 800);
+	};
+	const showanime = show ? { display: "block" } : { display: "none" };
 	return (
 		<div className={styles.blackBackground}>
 			<div className={styles.redBackGround}>
 				{modal && (
 					<div className={styles.popup}>
-						<form onSubmit={(e) => send(e)} className={styles.form}>
-							<div className={styles.close}>
-								<span onClick={() => setModal(false)}>x</span>
+						{confrim ? (
+							<div className={styles.confrim}>
+								<span>
+									Thank you for requesting access. Someone from our team will
+									contact you soon.
+								</span>
+								<button onClick={() => setModal(false)}>ok</button>
 							</div>
-							<div className={styles.wraper}>
-								<label>Full Name</label>
-								<input
-									type='text'
-									onChange={(e) => setName(e.target.value)}
-									required
-								/>
-							</div>
-							<div className={styles.wraper}>
-								<label>Company Email</label>
-								<input
-									type='email'
-									onChange={(e) => setEmail(e.target.value)}
-									required
-								/>
-							</div>
-							<div className={styles.wrap}>
-								<input
-									type='checkbox'
-									onChange={(e) => setSub(e.target.checked)}
-									checked={sub}
-								/>
-								<label>Also subscribe me to your newsletter.</label>
-							</div>
-							<div className={styles.submit}>
-								<button type='submit' className={styles.button}>
-									Request
-								</button>
-							</div>
-						</form>
+						) : (
+							<form onSubmit={(e) => send(e)} className={styles.form}>
+								<div className={styles.close}>
+									<span onClick={() => setModal(false)}>x</span>
+								</div>
+								<div className={styles.wraper}>
+									<label>Full Name</label>
+									<input
+										type='text'
+										onChange={(e) => setName(e.target.value)}
+										required
+									/>
+								</div>
+								<div className={styles.wraper}>
+									<label>Company Email</label>
+									<input
+										type='email'
+										onChange={(e) => setEmail(e.target.value)}
+										required
+									/>
+								</div>
+								<div className={styles.wrap}>
+									<input
+										type='checkbox'
+										onChange={(e) => setSub(e.target.checked)}
+										checked={sub}
+									/>
+									<label>Also subscribe me to your newsletter.</label>
+								</div>
+								<div className={styles.submit}>
+									<button type='submit' className={styles.button}>
+										Request
+									</button>
+								</div>
+							</form>
+						)}
 					</div>
 				)}
 				<img
@@ -86,7 +107,7 @@ const Welcome = () => {
 				/>
 				<div className={styles.container}>
 					<div className={styles.logo}>
-						<span>LAKHE</span>{" "}
+						<span>LAKHE</span>
 					</div>
 					<h1 className={styles.heading}>Offer Cashback at Checkout</h1>
 					<p className={styles.description}>
@@ -115,25 +136,55 @@ const Welcome = () => {
 									<div>-H &#39;Content-Type: application/json&#39; \</div>
 									<div> -d &#39;&#10100;</div>
 									<div className={styles.props}>
-										&#34;merchant_id&#34;: &#34;Dummy_Commerce&#34;,
+										&#34;merchant_id&#34;<span className={styles.token}>:</span>
+										<span className={styles.value}>
+											&#34;Dummy_Commerce&#34;,
+										</span>
 									</div>
 									<div className={styles.props}>
-										&#34;credit_card&#34;: &#34;3759 876543 21001&#34;,
+										&#34;credit_card&#34;<span className={styles.token}>:</span>
+										<span className={styles.value}>
+											&#34;3759 876543 21001&#34;,
+										</span>
 									</div>
 									<div className={styles.props}>
-										&#34;access_token&#34;:
-										&#34;MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3&#34;
+										&#34;access_token&#34;
+										<span className={styles.token}>:</span>
+										<span className={styles.value}>
+											&#34;MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3&#34;
+										</span>
 									</div>
 									<div className={styles.rightbracs}>&#10101;&#39;</div>
-									<div
-										onClick={() => setResponse(true)}
-										className={styles.button}
-									>
+									<div style={showanime} className={styles.animation}></div>
+									<div onClick={() => handleres()} className={styles.button}>
 										RUN
 									</div>
 								</>
 							) : (
-								<pre>{JSON.stringify(jsons, null, 2)}</pre>
+								<div className={styles.pre}>
+									<div>&#10100;</div>
+									<div className={styles.props}>
+										&#34;cashback_type&#34;
+										<span className={styles.token}>:</span>
+										<span className={styles.value}>&#34;percentage&#34;,</span>
+									</div>
+									<div className={styles.props}>
+										&#34;cashback&#34;<span className={styles.token}>:</span>
+										<span className={styles.value}>12.5,</span>
+									</div>
+									<div className={styles.props}>
+										&#34;expiry_date&#34;<span className={styles.token}>:</span>
+										<span className={styles.value}>&#34;03/25/2022&#34;,</span>
+									</div>
+									<div className={styles.props}>
+										&#34;activation_url&#34;
+										<span className={styles.token}>:</span>
+										<span className={styles.value}>
+											&#34;https://sandbox.rewardsapp.com/amex/rewards-activation/&#34;
+										</span>
+									</div>
+									<div>&#10101;</div>
+								</div>
 							)}
 						</div>
 
