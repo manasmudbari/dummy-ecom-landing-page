@@ -163,21 +163,27 @@ const Welcome = () => {
 							) : (
 								<div className={styles.pre}>
 									<div>&#10100;</div>
-									<div className={styles.props}>
-										&#34;cashback_type&#34;
+									<div className={styles.row}>
+										<span className={styles.props}>
+											&#34;cashback_type&#34;
+										</span>
 										<span className={styles.token}>:</span>
 										<span className={styles.value}>&#34;percentage&#34;,</span>
 									</div>
-									<div className={styles.props}>
-										&#34;cashback&#34;<span className={styles.token}>:</span>
+									<div className={styles.row}>
+										<span className={styles.props}>&#34;cashback&#34;</span>
+										<span className={styles.token}>:</span>
 										<span className={styles.value}>12.5,</span>
 									</div>
-									<div className={styles.props}>
-										&#34;expiry_date&#34;<span className={styles.token}>:</span>
+									<div className={styles.row}>
+										<span className={styles.props}>&#34;expiry_date&#34;</span>
+										<span className={styles.token}>:</span>
 										<span className={styles.value}>&#34;03/25/2022&#34;,</span>
 									</div>
-									<div className={styles.props}>
-										&#34;activation_url&#34;
+									<div className={styles.row}>
+										<span className={styles.props}>
+											&#34;activation_url&#34;
+										</span>{" "}
 										<span className={styles.token}>:</span>
 										<span className={styles.value}>
 											&#34;https://sandbox.rewardsapp.com/amex/rewards-activation/&#34;
